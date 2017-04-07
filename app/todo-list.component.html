@@ -1,0 +1,30 @@
+<!-- This is the template for the todos app -->
+
+<h1>ToDos List</h1>
+    <div class="controls">
+        <span (click)="makeAChange(i); addNewTodo()" class="new-todo">Add new Todo <strong>+</strong></span>
+    </div>
+
+    <input type="text" #listFilter (keyup)="0" placeholder="type in search term here"><br/><br/>
+
+    <ul class="list-group form-inline">
+        <li *ngFor="#todo of todos | sort | myfilter:listFilter.value; #i=index" class="list-group-item completed" [class.completed]="todo.completed">
+           <input type="checkbox" [(ngModel)]="todo.completed" (click)="makeAChange(i); saveTodos()"  />
+           <label [hidden]="todo.editing" (click)="todo.editing = true" class="todo-title">{{todo.name | uppercase}}</label>
+           <input type="text" [hidden]="!todo.editing" [(ngModel)]="todo.name" (blur)="todo.editing = false"/>
+           <button (click)="makeAChange(i); deleteTodo(i)" type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+           </button>
+        </li>
+    </ul>
+
+    <div *ngIf="edited==true" class="alert alert-success alert-dismissible fade in" role="alert">
+        <button (click)="edited = !edited" type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>List Saved!</strong> Changes has been saved. Changes: {{changes}}
+    </div>
+<br/><br/>
+ <a  href="/home">Click Here for Home</a><br/><br/>
+
+  <a (click)="logout()" href="#">Click Here to logout</a><br/><br/>
